@@ -93,6 +93,7 @@ if ($psversion -eq 0)
 
 # retrieve absolute paths independetn if path is given relative oder absolute
 $inputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($inputFile)
+$iconFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($iconFile)
 $outputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($outputFile)
 
 if (!(Test-Path $inputFile -PathType Leaf))
@@ -107,13 +108,10 @@ if ($inputFile -eq $outputFile)
 	exit -1
 }
 
-if (!([string]::IsNullOrEmpty($iconFile)))
+if (!(Test-Path $iconFile -PathType Leaf))
 {
-	if (!(Test-Path (Join-Path (Split-Path $inputFile) $iconFile) -PathType Leaf))
-	{
-		Write-Host "Icon file ""$($iconfile)"" not found! It must be in the same directory as the powershell script (""$($inputfile)"")."
-		exit -1
-	}
+	Write-Host "Input file $($iconFile) not found!"
+	exit -1
 }
 
 if (!$runtime20 -and !$runtime30 -and !$runtime40)
@@ -229,7 +227,7 @@ $cp.GenerateExecutable = $TRUE
 $iconFileParam = ""
 if (!([string]::IsNullOrEmpty($iconFile)))
 {
-	$iconFileParam = "/win32icon:$($iconFile)"
+	$iconFileParam = "`"/win32icon:$($iconFile)`""
 }
 $manifestParam = ""
 if ($elevated)
