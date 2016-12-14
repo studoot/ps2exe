@@ -1,4 +1,4 @@
-Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE)
+Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
 
 <################################################################################>
 <##                                                                            ##>
@@ -41,7 +41,9 @@ if ([string]::IsNullOrEmpty($inputFile) -or [string]::IsNullOrEmpty($outputFile)
 	Write-Host ""
 	Write-Host "powershell.exe -command ""&'.\ps2exe.ps1' [-inputFile] '<file_name>' [-outputFile] '<file_name>'"
 	Write-Host "               [-verbose] [-debug] [-runtime20|-runtime30|-runtime40] [-lcid <id>] [-x86|-x64] [-Sta|-Mta]"
-	Write-Host "               [-noConsole] [-iconFile '<file_name>'] [-elevated]"""
+	Write-Host "               [-noConsole] [-iconFile '<file_name>'] [-elevated]"
+	Write-Host "               [-title '<title-string>'] [-description '<description-string>']  [-company '<company-string>']"
+	Write-Host "               [-product '<product-string>'] [-copyright '<copyright-string>']  [-version '<version-string>']"""
 	Write-Host ""
 	Write-Host "   inputFile = powerShell script that you want to convert to EXE"
 	Write-Host "  outputFile = destination EXE file name"
@@ -61,6 +63,13 @@ if ([string]::IsNullOrEmpty($inputFile) -or [string]::IsNullOrEmpty($outputFile)
 	Write-Host "   noConsole = the resulting EXE file will be a Windows Forms app without a console window."
 	Write-Host "    iconFile = icon for the compiled EXE"
 	Write-Host "    elevated = include manifest to request admin privileges"
+	Write-Host "       title = title to include in assembly information"
+	Write-Host " description = description to include in assembly information"
+	Write-Host "     company = company name to include in assembly information"
+	Write-Host "     product = product name to include in assembly information"
+	Write-Host "   copyright = copyright to include in assembly information"
+	Write-Host "     version = version to include in assembly information"
+
 	Write-Host ""
 	Write-Host "Input file or output file not specified!"
 	exit -1
@@ -286,6 +295,32 @@ using System.Runtime.InteropServices;
 $(if ($noConsole) {@"
 using System.Windows.Forms;
 using System.Drawing;
+"@ })
+using System.Reflection;
+
+$(if ($title) {@"
+[assembly:AssemblyTitle("$title")]
+"@ })
+
+$(if ($description) {@"
+[assembly:AssemblyDescription("$description")]
+"@ })
+
+$(if ($company) {@"
+[assembly:AssemblyCompany("$company")]
+"@ })
+
+$(if ($product) {@"
+[assembly:AssemblyProduct("$product")]
+"@ })
+
+$(if ($copyright) {@"
+[assembly:AssemblyCopyright("$copyright")]
+"@ })
+
+$(if ($version) {@"
+[assembly:AssemblyVersion("$version")]
+[assembly:AssemblyFileVersion("$version")]
 "@ })
 
 namespace ik.PowerShell
