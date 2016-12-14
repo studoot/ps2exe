@@ -1,0 +1,103 @@
+PS2EXE-GUI v0.5.0.1
+Changes by Markus Scholtes:
+- PROGRESS handler removed
+
+List of changes (line numbers are from PS2EXE-GUI v0.5.0.0):
+line 5 - adjusted version number
+line 18 - adjusted version number
+line 1600 to 1603 - removed handler for progress stream, resulted in progress output converted to string (e.g.: "parent = -1 id = 0 act = Activity stat = State cur =  pct = -1 sec = -1 type = Completed")
+
+
+
+PS2EXE-GUI v0.5.0.0
+
+Changes by Markus Scholtes:
+- treats Powershell 5 or above like Powershell 4
+- Unused classes ReadKeyForm and CredentialForm in console output removed
+- remove dead code
+- System.Windows.Forms and System.Drawing are loaded for GUI output
+- Write methods use MessageBox.Show in GUI output
+- InputBox class introduced which is used for Readline, Read LineasSecureString and Prompt with GUI output
+- ChoiceBox-Klasse introduced which is used for PromptForChoice with GUI output
+- ReadKeyBox-Klasse introduced which is used for ReadKey with GUI output
+- Prompt accepts SecureString and PSCredential as field types now
+- Prompt: when conversion of input fails, the prompt reappears
+- PromptForPassword: corrected string overflow in 32 bit runtime 
+- PromptForCredential for console: computer name is used, user name is demanded when needed
+- PromptForChoice accepts help texts and default values now
+- the console output methods do not use black background and white foreground, but use the actual colors now
+- missing methods WriteLine() and WriteLine(ConsoleColor, ConsoleColor, String) added
+- method SetBufferContents for Clear-Host added
+- method KeyAvailable added
+- method BufferSize for GUI output corrected
+- in GUI output the class Console is not called anymore
+- input and output file are seeked and generated in the correct directory
+- check that input file is not the same as the output file
+- doubled VERBOSE and WARNING handler removed
+- new, corrected and much expanded parser for command line parameters
+- several small fixes
+- revision of help and error texts
+
+What is still missing:
+Write-Progress
+
+
+List of changes (line numbers are from PS2EXE v0.5.0.0):
+lines 38 to 70 - updated help text
+line 74 - powershell versions greater than 4 are treated like version 4
+lines 94 to 107 - corrected generation of absolute file paths
+line 108 - added check whether input file is the same as output file
+line 140 - added icon file parameter for runtime 2.0
+line 167 - omitted, no need for Set-Location
+lines 207 to 208 - omitted, full paths already retrieved
+lines 253 to 272 - omitted
+lines 280 to 342 - omitted
+line 414 - corrected StringBuilder constructor for 32 bit environments
+line 430 - allocated enough space for long user or domain names
+lines 447 to 561 - omitted
+lines 564 to 582 - moved to beginning of c# code
+line 579 - added Forms and Drawing namespaces in GUI mode
+line 586 - removed variable CONSOLE, added variables to store console colors for GUI environment
+lines 588 to 598 - added GUI support for BackgroundColor
+lines 600 to 614 - corrected dummy size for BufferSize for GUI, so WriteLine is called
+lines 616 to 627 - added GUI support for CursorPosition
+lines 629 to 639 - added GUI support for CursorSize
+line 643 - removed exception
+lines 646 to 656 - added GUI support for ForegroundColor
+lines 663 to 669 - implemented KeyAvailable
+lines 671 to 674 - added GUI support for MaxPhysicalWindowSize
+lines 676 to 679 - added GUI support for MaxWindowSize
+line 694 - added support for NUMLOCK
+lines 698 to 700 - added working GUI support for ReadKey
+lines 709 to 712 - implemented, even Clear-Host works now
+lines 719 to 733 - added GUI support for WindowPosition
+lines 735 to 749 - added GUI support for WindowSize
+lines 751 to 761 - added GUI support for WindowTitle
+line 762 - added classes for input boxes, choice boxes and read key boxes
+line 765 - removed constant CONSOLE
+line 772 - initializing of screen colors added
+lines 775 to 856 - Prompt: added GUI support, added secure text, added help messages
+lines 858 to 906 - PromptForChoice: added GUI support
+lines 908 to 937 - PromptForCredential: corrected handling of readonly user names
+lines 939 to 964 - PromptForCredential: corrected handling of readonly user names
+line 973 - added private variables for input boxes
+lines 974 to 977 - added GUI support for ReadLine
+lines 979 to 986 - ReadLineAsSecureString: implemented password input in console and GUI
+lines 988 to 993 - Write: corrected color management, added GUI support
+lines 995 to 1000 - Write: corrected color management, added GUI support
+lines 1002 to 1007 - WriteDebugLine: corrected color management, added GUI support
+lines 1009 to 1014 - WriteErrorLine: corrected color management, added GUI support
+line 1016 - added function WriteLine(ConsoleColor, ConsoleColor, string)
+line 1016 - added function WriteLine()
+lines 1016 to 1021 - WriteLine: removed color management, added GUI support
+lines 1028 to 1033 - WriteVerboseLine: corrected color management, added GUI support
+lines 1035 to 1040 - WriteWarningLine: corrected color management, added GUI support
+line 1047 - removed constant CONSOLE
+line 1110 - set correct version number
+line 1150 - removed constant CONSOLE
+line 1193 to 1206 - removed Console.CancelKeyPress in case there is no console
+line 1213 to 1216 - removed handler for verbose stream, resulted in double verbose output
+line 1217 to 1220 - removed handler for warning stream, resulted in double warning output
+line 1275 to 1280 - inserted a much improved routine to retrieve parameters (still faulty in some situations)
+lines 1299 to 1303 - exception is displayed in a message box when there is no console
+lines 1305 to 1309 - wait text is displayed in a message box when there is no console
