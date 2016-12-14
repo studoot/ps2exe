@@ -1,4 +1,4 @@
-Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null)
+Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE)
 
 <################################################################################>
 <##                                                                            ##>
@@ -41,7 +41,7 @@ if ([string]::IsNullOrEmpty($inputFile) -or [string]::IsNullOrEmpty($outputFile)
 	Write-Host ""
 	Write-Host "powershell.exe -command ""&'.\ps2exe.ps1' [-inputFile] '<file_name>' [-outputFile] '<file_name>'"
 	Write-Host "               [-verbose] [-debug] [-runtime20|-runtime30|-runtime40] [-lcid <id>] [-x86|-x64] [-Sta|-Mta]"
-	Write-Host "               [-noConsole] [-iconFile '<file_name>']"""
+	Write-Host "               [-noConsole] [-iconFile '<file_name>'] [-elevated]"""
 	Write-Host ""
 	Write-Host "   inputFile = powerShell script that you want to convert to EXE"
 	Write-Host "  outputFile = destination EXE file name"
@@ -60,6 +60,7 @@ if ([string]::IsNullOrEmpty($inputFile) -or [string]::IsNullOrEmpty($outputFile)
 	Write-Host "         mta = Multi Thread Apartment Mode"
 	Write-Host "   noConsole = the resulting EXE file will be a Windows Forms app without a console window."
 	Write-Host "    iconFile = icon for the compiled EXE"
+	Write-Host "    elevated = include manifest to request admin privileges"
 	Write-Host ""
 	Write-Host "Input file or output file not specified!"
 	exit -1
@@ -230,7 +231,13 @@ if (!([string]::IsNullOrEmpty($iconFile)))
 {
 	$iconFileParam = "/win32icon:$($iconFile)"
 }
-$cp.CompilerOptions = "/platform:$($platform) /target:$( if ($noConsole){'winexe'}else{'exe'}) $($iconFileParam)"
+$manifestParam = ""
+if ($elevated)
+{
+	$runElevatedManifestPath = Resolve-Path -Path $(Join-Path -Path $PSScriptRoot -ChildPath runElevated.manifest)
+	$manifestParam = "`"/win32manifest:$($runElevatedManifestPath)`""
+}
+$cp.CompilerOptions = "/platform:$($platform) /target:$( if ($noConsole){'winexe'}else{'exe'}) $($iconFileParam) $($manifestParam)"
 
 $cp.IncludeDebugInformation = $debug
 
