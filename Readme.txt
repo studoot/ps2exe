@@ -1,5 +1,5 @@
-PS2EXE-GUI v0.5.0.1
-Release: 2016-11-04
+PS2EXE-GUI v0.5.0.2
+Release: 2017-01-02
 
 Overworking of the great script of Igor Karstein with GUI support by Markus Scholtes. 
 
@@ -17,7 +17,11 @@ Unfortunately Ingo seems to have stopped working on his script so I overworked h
 
 I made the following important fixes and improvements:
 
-Update v0.5.0.1: - PROGRESS handler removed
+Update v0.5.0.2:
+- STA or MTA mode is used corresponding to the powershell version when not specified (V3 or higher: STA, V2: MTA)
+  This prevents problems with COM and some graphic dialogs
+- icon file is seeked in the correct directory (thanks to Stuart Dootson)
+Update v0.5.0.1: - interfering PROGRESS handler removed
 - treats Powershell 5 or above like Powershell 4
 - method SetBufferContents for Clear-Host added
 - the console output methods do not use black background and white foreground, but use the actual colors now

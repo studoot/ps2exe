@@ -1,3 +1,17 @@
+PS2EXE-GUI v0.5.0.2
+Changes by Markus Scholtes:
+- STA or MTA mode is used corresponding to the powershell version when not specified (V3 or higher: STA, V2: MTA)
+  This prevents problems with COM and some graphic dialogs
+- icon file is seeked in the correct directory
+
+List of changes (line numbers are from PS2EXE-GUI v0.5.0.1):
+line 5 - adjusted version number
+line 18 - adjusted version number
+line 111 to 115 - overworked routine to get icon file path
+line 174 - when no -STA or -MTA switch is given, the threading apartment is set here according to the powershell version
+
+
+
 PS2EXE-GUI v0.5.0.1
 Changes by Markus Scholtes:
 - PROGRESS handler removed

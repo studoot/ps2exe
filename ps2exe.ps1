@@ -1,8 +1,8 @@
-Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null)
+﻿Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null)
 
 <################################################################################>
 <##                                                                            ##>
-<##      PS2EXE-GUI v0.5.0.1                                                   ##>
+<##      PS2EXE-GUI v0.5.0.2                                                   ##>
 <##      Written by: Ingo Karstein (http://blog.karstein-consulting.com)       ##>
 <##      Reworked and GUI support by Markus Scholtes                           ##>
 <##                                                                            ##>
@@ -15,7 +15,7 @@ Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [sw
 
 if (!$nested)
 {
-	Write-Host "PS2EXE-GUI v0.5.0.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes"
+	Write-Host "PS2EXE-GUI v0.5.0.2 by Ingo Karstein, reworked and GUI support by Markus Scholtes"
 }
 else
 {
@@ -90,7 +90,7 @@ if ($psversion -eq 0)
 	exit -1
 }
 
-# retrieve absolute paths independetn if path is given relative oder absolute
+# retrieve absolute paths independent whether path is given relative oder absolute
 $inputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($inputFile)
 $outputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($outputFile)
 
@@ -108,9 +108,12 @@ if ($inputFile -eq $outputFile)
 
 if (!([string]::IsNullOrEmpty($iconFile)))
 {
-	if (!(Test-Path (Join-Path (Split-Path $inputFile) $iconFile) -PathType Leaf))
+	# retrieve absolute path independent whether path is given relative oder absolute
+	$iconFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($iconFile)
+
+	if (!(Test-Path $iconFile -PathType Leaf))
 	{
-		Write-Host "Icon file ""$($iconfile)"" not found! It must be in the same directory as the powershell script (""$($inputfile)"")."
+		Write-Host "Icon file $($iconFile) not found!"
 		exit -1
 	}
 }
@@ -171,6 +174,18 @@ if ($psversion -lt 4 -and $runtime40)
 	exit -1
 }
 
+if ($psversion -lt 3 -and $Mta -eq $FALSE -and $Sta -eq $FALSE)
+{
+	# Set default apartment mode for powershell version if not set by parameter
+	$Mta = $TRUE
+}
+
+if ($psversion -ge 3 -and $Mta -eq $FALSE -and $Sta -eq $FALSE)
+{
+	# Set default apartment mode for powershell version if not set by parameter
+	$Sta = $TRUE
+}
+
 Write-Host ""
 
 $type = ('System.Collections.Generic.Dictionary`2') -as "Type"
@@ -228,7 +243,7 @@ $cp.GenerateExecutable = $TRUE
 $iconFileParam = ""
 if (!([string]::IsNullOrEmpty($iconFile)))
 {
-	$iconFileParam = "/win32icon:$($iconFile)"
+	$iconFileParam = "`"/win32icon:$($iconFile)`""
 }
 $cp.CompilerOptions = "/platform:$($platform) /target:$( if ($noConsole){'winexe'}else{'exe'}) $($iconFileParam)"
 
@@ -1672,7 +1687,7 @@ $(if (!$noConsole) {@"
                 }
                 else
                  	// caution: when called in powershell $TRUE gets converted, when called in cmd.exe not
-                 	if ((match.Groups[2].Value == "$TRUE") || (match.Groups[2].Value.ToUpper() == "\x24TRUE")) 
+                 	if ((match.Groups[2].Value == "$TRUE") || (match.Groups[2].Value.ToUpper() == "\x24TRUE"))
                 	{ // switch found
                   	powershell.AddParameter(match.Groups[1].Value, true);
                     argbuffer = null;
