@@ -1,10 +1,11 @@
-Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
+﻿Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
 
 <################################################################################>
 <##                                                                            ##>
-<##      PS2EXE-GUI v0.5.0.1                                                   ##>
+<##      PS2EXE-GUI v0.6.0.1                                                   ##>
 <##      Written by: Ingo Karstein (http://blog.karstein-consulting.com)       ##>
 <##      Reworked and GUI support by Markus Scholtes                           ##>
+<##      Further modifications by Stuart Dootson                               ##>
 <##                                                                            ##>
 <##      This script is released under Microsoft Public Licence                ##>
 <##          that can be downloaded here:                                      ##>
