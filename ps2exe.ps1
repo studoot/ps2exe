@@ -182,6 +182,18 @@ if ($psversion -lt 4 -and $runtime40)
 	exit -1
 }
 
+if ($psversion -lt 3 -and $Mta -eq $FALSE -and $Sta -eq $FALSE)
+{
+	# Set default apartment mode for powershell version if not set by parameter
+	$Mta = $TRUE
+}
+
+if ($psversion -ge 3 -and $Mta -eq $FALSE -and $Sta -eq $FALSE)
+{
+	# Set default apartment mode for powershell version if not set by parameter
+	$Sta = $TRUE
+}
+
 Write-Host ""
 
 $type = ('System.Collections.Generic.Dictionary`2') -as "Type"
