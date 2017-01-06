@@ -107,7 +107,7 @@ $outputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromP
 
 if (!(Test-Path $inputFile -PathType Leaf))
 {
-	Write-Host "Input file $($inputfile) not found!"
+	Write-Host "Input file $($inputFile) not found!"
 	exit -1
 }
 
