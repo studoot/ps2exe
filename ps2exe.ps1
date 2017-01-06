@@ -102,7 +102,6 @@ if ($psversion -eq 0)
 
 # retrieve absolute paths independetn if path is given relative oder absolute
 $inputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($inputFile)
-$iconFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($iconFile)
 $outputFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($outputFile)
 
 if (!(Test-Path $inputFile -PathType Leaf))
@@ -117,10 +116,14 @@ if ($inputFile -eq $outputFile)
 	exit -1
 }
 
-if (!(Test-Path $iconFile -PathType Leaf))
+if (!([string]::IsNullOrEmpty($iconFile)))
 {
-	Write-Host "Input file $($iconFile) not found!"
-	exit -1
+	$iconFile = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($iconFile)
+	if (!(Test-Path $iconFile -PathType Leaf))
+	{
+		Write-Host "Icon file $($iconFile) not found!"
+		exit -1
+	}
 }
 
 if (!$runtime20 -and !$runtime30 -and !$runtime40)
