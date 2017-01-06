@@ -15,7 +15,7 @@ Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [sw
 
 if (!$nested)
 {
-	Write-Host "PS2EXE-GUI v0.5.0.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes"
+	Write-Host "PS2EXE-GUI v0.6.0.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes, further modifications by Stuart Dootson"
 }
 else
 {
