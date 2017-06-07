@@ -312,7 +312,6 @@ $(if ($noConsole) {@"
 using System.Windows.Forms;
 using System.Drawing;
 "@ })
-using System.Reflection;
 
 $(if ($title) {@"
 [assembly:AssemblyTitle("$title")]
