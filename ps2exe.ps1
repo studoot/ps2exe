@@ -1,4 +1,4 @@
-﻿Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
+Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
 
 <################################################################################>
 <##                                                                            ##>
@@ -757,7 +757,7 @@ $(if ($noConsole){ @"
 
 		  // Buttons erzeugen
 		  buttonOk.Text = "OK";
-		  buttonCancel.Text = "Abbrechen";
+		  buttonCancel.Text = "Cancel";
 		  buttonOk.DialogResult = DialogResult.OK;
 		  buttonCancel.DialogResult = DialogResult.Cancel;
 		  buttonOk.SetBounds(System.Math.Max(12, label.Right - 158), label.Bottom + 36, 75, 23);
