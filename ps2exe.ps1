@@ -730,7 +730,7 @@ $(if ($noConsole){ @"
 		  // Controls erzeugen
 		  Form form = new Form();
 		  Label label = new Label();
-		  TextBox textBox = new TextBox();
+	  	  TextBox textBox = new TextBox();
 		  Button buttonOk = new Button();
 		  Button buttonCancel = new Button();
 
@@ -743,8 +743,11 @@ $(if ($noConsole){ @"
 				else
 					label.Text = "Input:          ";
 			}
-			else
+			else {
 			  label.Text = sPrompt;
+			  label.AutoSize = true;
+			  label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
+			}
 		  label.Location = new Point(9, 19);
 		  label.AutoSize = true;
 		  // erst durch Add() wird die Größe des Labels ermittelt
@@ -811,7 +814,8 @@ $(if ($noConsole){ @"
 		  	Label label = new Label();
 			  label.Text = sPrompt;
 		  	label.Location = new Point(9, 19);
-		  	label.AutoSize = true;
+			  label.AutoSize = true;
+			  label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
 		  	// erst durch Add() wird die Größe des Labels ermittelt
 		  	form.Controls.Add(label);
 		  	iPosY = label.Bottom;
@@ -825,10 +829,12 @@ $(if ($noConsole){ @"
 		  {
 				aradioButton[Counter] = new RadioButton();
 				aradioButton[Counter].Text = sAuswahl.Label;
+				var textSize = TextRenderer.MeasureText(aradioButton[Counter].Text, aradioButton[Counter].Font, new System.Drawing.Size((System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2)-20, 0), TextFormatFlags.WordBreak);
+				aradioButton[Counter].Width = textSize.Width + 20;
+				aradioButton[Counter].Height = textSize.Height + 1;
 				if (Counter == iVorgabe)
 	    	{ aradioButton[Counter].Checked = true; }
-		  	aradioButton[Counter].Location = new Point(9, iPosY);
-		  	aradioButton[Counter].AutoSize = true;
+			aradioButton[Counter].Location = new Point(9, iPosY);
 		  	// erst durch Add() wird die Größe des Labels ermittelt
 		  	form.Controls.Add(aradioButton[Counter]);
 		  	iPosY = aradioButton[Counter].Bottom;
@@ -969,9 +975,12 @@ $(if ($noConsole){ @"
 			{
 					label.Text = "Press a key";
 			}
-			else
+			else {
 				label.Text = sPrompt;
-			label.Location = new Point(9, 19);
+				label.AutoSize = true;
+				label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
+			}
+			  label.Location = new Point(9, 19);
 			label.AutoSize = true;
 			// erst durch Add() wird die Größe des Labels ermittelt
 			form.Controls.Add(label);
@@ -1813,8 +1822,8 @@ $(if (!$noConsole) {@"
 #endregion
 
 #region EXE Config file
-	$configFileForEXE2 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v2.0.50727""/></startup></configuration>"
-	$configFileForEXE3 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v4.0"" sku="".NETFramework,Version=v4.0"" /></startup></configuration>"
+$configFileForEXE2 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v2.0.50727""/></startup></configuration>"
+$configFileForEXE3 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v4.0"" sku="".NETFramework,Version=v4.0"" /></startup></configuration>"
 #endregion
 
 Write-Host "Compiling file... " -NoNewline
