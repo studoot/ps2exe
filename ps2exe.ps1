@@ -2,7 +2,7 @@ Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [sw
 
 <################################################################################>
 <##                                                                            ##>
-<##      PS2EXE-GUI v0.6.0.1                                                   ##>
+<##      PS2EXE-GUI v0.6.1                                                     ##>
 <##      Written by: Ingo Karstein (http://blog.karstein-consulting.com)       ##>
 <##      Reworked and GUI support by Markus Scholtes                           ##>
 <##      Further modifications by Stuart Dootson                               ##>
@@ -16,7 +16,7 @@ Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [sw
 
 if (!$nested)
 {
-	Write-Host "PS2EXE-GUI v0.6.0.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes, further modifications by Stuart Dootson"
+	Write-Host "PS2EXE-GUI v0.6.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes, further modifications by Stuart Dootson"
 }
 else
 {
@@ -1565,7 +1565,7 @@ $(if (!$noConsole) {@"
 		{
 			get
 			{
-				return new Version(0, 5, 0, 0);
+				return new Version(0, 6, 1, 0);
 			}
 		}
 
