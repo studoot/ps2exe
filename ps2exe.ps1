@@ -1,8 +1,8 @@
-﻿Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
+Param([string]$inputFile=$null, [string]$outputFile=$null, [switch]$verbose, [switch] $debug, [switch]$runtime20, [switch]$runtime30, [switch]$runtime40, [switch]$x86, [switch]$x64, [int]$lcid, [switch]$Sta, [switch]$Mta, [switch]$noConsole, [switch]$nested, [string]$iconFile=$null, [switch] $elevated=$FALSE, [string]$title=$null, [string]$description=$null, [string]$company=$null, [string]$product=$null, [string]$copyright=$null, [string]$version=$null)
 
 <################################################################################>
 <##                                                                            ##>
-<##      PS2EXE-GUI v0.6.0.1                                                   ##>
+<##      PS2EXE-GUI v0.6.1                                                     ##>
 <##      Written by: Ingo Karstein (http://blog.karstein-consulting.com)       ##>
 <##      Reworked and GUI support by Markus Scholtes                           ##>
 <##      Further modifications by Stuart Dootson                               ##>
@@ -16,7 +16,7 @@
 
 if (!$nested)
 {
-	Write-Host "PS2EXE-GUI v0.6.0.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes, further modifications by Stuart Dootson"
+	Write-Host "PS2EXE-GUI v0.6.1 by Ingo Karstein, reworked and GUI support by Markus Scholtes, further modifications by Stuart Dootson"
 }
 else
 {
@@ -730,7 +730,7 @@ $(if ($noConsole){ @"
 		  // Controls erzeugen
 		  Form form = new Form();
 		  Label label = new Label();
-		  TextBox textBox = new TextBox();
+	  	  TextBox textBox = new TextBox();
 		  Button buttonOk = new Button();
 		  Button buttonCancel = new Button();
 
@@ -743,8 +743,11 @@ $(if ($noConsole){ @"
 				else
 					label.Text = "Input:          ";
 			}
-			else
+			else {
 			  label.Text = sPrompt;
+			  label.AutoSize = true;
+			  label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
+			}
 		  label.Location = new Point(9, 19);
 		  label.AutoSize = true;
 		  // erst durch Add() wird die Größe des Labels ermittelt
@@ -757,7 +760,7 @@ $(if ($noConsole){ @"
 
 		  // Buttons erzeugen
 		  buttonOk.Text = "OK";
-		  buttonCancel.Text = "Abbrechen";
+		  buttonCancel.Text = "Cancel";
 		  buttonOk.DialogResult = DialogResult.OK;
 		  buttonCancel.DialogResult = DialogResult.Cancel;
 		  buttonOk.SetBounds(System.Math.Max(12, label.Right - 158), label.Bottom + 36, 75, 23);
@@ -811,7 +814,8 @@ $(if ($noConsole){ @"
 		  	Label label = new Label();
 			  label.Text = sPrompt;
 		  	label.Location = new Point(9, 19);
-		  	label.AutoSize = true;
+			  label.AutoSize = true;
+			  label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
 		  	// erst durch Add() wird die Größe des Labels ermittelt
 		  	form.Controls.Add(label);
 		  	iPosY = label.Bottom;
@@ -825,10 +829,12 @@ $(if ($noConsole){ @"
 		  {
 				aradioButton[Counter] = new RadioButton();
 				aradioButton[Counter].Text = sAuswahl.Label;
+				var textSize = TextRenderer.MeasureText(aradioButton[Counter].Text, aradioButton[Counter].Font, new System.Drawing.Size((System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2)-20, 0), TextFormatFlags.WordBreak);
+				aradioButton[Counter].Width = textSize.Width + 20;
+				aradioButton[Counter].Height = textSize.Height + 1;
 				if (Counter == iVorgabe)
 	    	{ aradioButton[Counter].Checked = true; }
-		  	aradioButton[Counter].Location = new Point(9, iPosY);
-		  	aradioButton[Counter].AutoSize = true;
+			aradioButton[Counter].Location = new Point(9, iPosY);
 		  	// erst durch Add() wird die Größe des Labels ermittelt
 		  	form.Controls.Add(aradioButton[Counter]);
 		  	iPosY = aradioButton[Counter].Bottom;
@@ -969,9 +975,12 @@ $(if ($noConsole){ @"
 			{
 					label.Text = "Press a key";
 			}
-			else
+			else {
 				label.Text = sPrompt;
-			label.Location = new Point(9, 19);
+				label.AutoSize = true;
+				label.MaximumSize = new System.Drawing.Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width/2, 0);
+			}
+			  label.Location = new Point(9, 19);
 			label.AutoSize = true;
 			// erst durch Add() wird die Größe des Labels ermittelt
 			form.Controls.Add(label);
@@ -1556,7 +1565,7 @@ $(if (!$noConsole) {@"
 		{
 			get
 			{
-				return new Version(0, 5, 0, 0);
+				return new Version(0, 6, 1, 0);
 			}
 		}
 
@@ -1813,8 +1822,8 @@ $(if (!$noConsole) {@"
 #endregion
 
 #region EXE Config file
-	$configFileForEXE2 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v2.0.50727""/></startup></configuration>"
-	$configFileForEXE3 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v4.0"" sku="".NETFramework,Version=v4.0"" /></startup></configuration>"
+$configFileForEXE2 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v2.0.50727""/></startup></configuration>"
+$configFileForEXE3 = "<?xml version=""1.0"" encoding=""utf-8"" ?>`r`n<configuration><startup><supportedRuntime version=""v4.0"" sku="".NETFramework,Version=v4.0"" /></startup></configuration>"
 #endregion
 
 Write-Host "Compiling file... " -NoNewline
